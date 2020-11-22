@@ -41,7 +41,8 @@ public class Financial {
 	
 	public float calculateFinancial() {
 		float factor = this.financialType.getFactor()/100;
-		return this.vehicleValue*(100+factor)/(this.financialDuration*12);
+		int numberOfMonths = this.financialDuration*12;
+		return (this.vehicleValue*(1+factor))/numberOfMonths;
 	}
 
 	public FinancialType getFinancialType() {
