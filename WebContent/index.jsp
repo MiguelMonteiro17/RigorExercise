@@ -15,17 +15,17 @@
     </form>
     <br>
     <h1>Financiamento</h1>
-    <form action="financialServlet" method="post">
-    Tipo de financiamento: <input type="text" name="financialType" size="20">
+    <form action="financialServlet" method="get">
+    <p>Tipo de financiamento:</p>
+    <input type="text" name="financialType" size="20">
+    <br>
+    <p>Valor da viatura:</p>
+    <input type="text" name="vehicleValue">
+    <br>
+    <p>Duração:</p> <input type="text" name="financialDuration">
     <br>
     <br>
-    Valor da viatura: <input type="text" name="vehicleValue">
-    <br>
-    <br>
-    Duração: <input type="text" name="financialDuration">
-    <br>
-    <br>
-    <input type="submit" value="submeter"/>
+    <input type="submit" value="Calcular Financiamento"/>
     </form>
 </body>
 </html>

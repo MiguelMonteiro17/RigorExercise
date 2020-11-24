@@ -2,8 +2,6 @@ package com.rigor.servlets.model;
 
 public class FinancialType {
 	
-	private int financialId;
-	
 	private String financialTypeName;
 	
 	private int maxDuration;
@@ -43,16 +41,6 @@ public class FinancialType {
 		}else {
 			factor = 0;
 		}
-	}
-	
-	
-
-	public int getFinancialId() {
-		return financialId;
-	}
-
-	public void setFinancialId(int financialId) {
-		this.financialId = financialId;
 	}
 
 	@Override

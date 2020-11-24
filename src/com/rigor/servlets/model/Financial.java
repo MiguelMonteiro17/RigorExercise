@@ -8,10 +8,17 @@ public class Financial {
 	
 	private FinancialType financialType;
 	
+	private Client client;
+	
 	public Financial(float vehicleValue, int financialDuration, FinancialType financialType) {
+		this(vehicleValue,financialDuration,financialType,null);
+	}
+	
+	public Financial(float vehicleValue, int financialDuration,FinancialType financialType, Client client) {
 		setVehicleValue(vehicleValue);
 		setFinancialType(financialType);
 		setFinancialDuration(financialDuration);
+		setClient(client);
 	}
 	
 	private boolean checkFinancialDuration(int financialDuration) {
@@ -41,7 +48,7 @@ public class Financial {
 	
 	public float calculateFinancial() {
 		float factor = this.financialType.getFactor()/100;
-		int numberOfMonths = this.financialDuration*12;
+		int numberOfMonths = getMonthlyFundingDuration();
 		return (this.vehicleValue*(1+factor))/numberOfMonths;
 	}
 
@@ -52,6 +59,20 @@ public class Financial {
 	public void setFinancialType(FinancialType financialType) {
 		this.financialType = financialType;
 	}
+	
+	public int getMonthlyFundingDuration() {
+		return financialDuration*12;
+	}
+	
+	
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
 
 	@Override
 	public int hashCode() {
@@ -60,6 +81,7 @@ public class Financial {
 		result = prime * result + financialDuration;
 		result = prime * result + ((financialType == null) ? 0 : financialType.hashCode());
 		result = prime * result + Float.floatToIntBits(vehicleValue);
+		result = prime * result + ((client == null)? 0 : financialType.hashCode());
 		return result;
 	}
 
@@ -78,6 +100,11 @@ public class Financial {
 			if (other.financialType != null)
 				return false;
 		} else if (!financialType.equals(other.financialType))
+			return false;
+		if(client == null) {
+			if(other.client!= null)
+				return false;
+		}else if(!client.equals(other.client))
 			return false;
 		if (vehicleValue != other.vehicleValue)
 			return false;
