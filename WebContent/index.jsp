@@ -8,23 +8,18 @@
 <title>Hello World Java EE</title>
 </head>
 <body>
-    <h1>Hello JSP and Servlet!</h1>
-    <form action="helloServlet" method="post">
-    Enter your name: <input type="text" name="yourName" size="20">
-    <input type="submit" value="Call Servlet" />
-    </form>
-    <br>
     <h1>Financiamento</h1>
     <form action="financialServlet" method="get">
-    <p>Tipo de financiamento:</p>
-    <input type="text" name="financialType" size="20">
-    <br>
-    <p>Valor da viatura:</p>
-    <input type="text" name="vehicleValue">
-    <br>
-    <p>Duração:</p> <input type="text" name="financialDuration">
-    <br>
-    <br>
+    <label for="financialType">Tipo de financiamento:</label>
+    <Select name="financialType">
+    	<option value="Interno">Interno</option>
+    	<option value="Externo">Externo</option>
+    </Select>
+    
+    <p>Valor da viatura: <input type="text" name="vehicleValue"></p>
+   
+    <p>Duração:  <input type="text" name="financialDuration"></p>
+
     <input type="submit" value="Calcular Financiamento"/>
     </form>
 </body>

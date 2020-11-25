@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +14,7 @@ import com.google.gson.JsonSyntaxException;
 import com.rigor.servlets.dao.FinancialDAO;
 import com.rigor.servlets.model.Financial;
 
-public class FinancialDAOImpl implements FinancialDAO{
+public class FinancialDAOImpl extends AbstractAccessFileDAO implements FinancialDAO{
 	
 	private static final String financialFile = "C:\\projects\\financial.json";
 	
@@ -27,16 +26,22 @@ public class FinancialDAOImpl implements FinancialDAO{
 
 	@Override
 	public void saveFinancial(Financial financial) {
+		//List<Financial> listFinancial = getListTypeFromFile(financialFile,Financial[].class);
 		List<Financial> listFinancial = getFinancialListFromFile();
 		listFinancial.add(financial);
+		//saveListTypeOnJsonFile(financialFile, listFinancial);
 		saveFinancialListOnJsonFile(listFinancial);
 	}
 	
 	
 	private List<Financial> getFinancialListFromFile(){	
+		List<Financial> listFinancial = new ArrayList<>();
 		try {
 			Financial[] arrayFinancial = gson.fromJson(new FileReader(financialFile), Financial[].class);
-			return Arrays.asList(arrayFinancial);
+			int arraySize = arrayFinancial.length;
+			for(int i = 0; i<arraySize; i++) {
+				listFinancial.add(arrayFinancial[i]);
+			}
 		} catch (JsonSyntaxException e) {
 			//TODO: log error
 			e.printStackTrace();
@@ -47,7 +52,7 @@ public class FinancialDAOImpl implements FinancialDAO{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ArrayList<>();
+		return listFinancial;
 	}
 	
 	private void saveFinancialListOnJsonFile(List<Financial> listFinancial) {	

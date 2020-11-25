@@ -36,14 +36,23 @@ public class FinancialServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String financialTypeName = request.getParameter("financialType");
-		float vehicleValue = Float.parseFloat(request.getParameter("vehicleValue"));
-		int duration = Integer.parseInt(request.getParameter("financialDuration"));
-		FinancialDto financialDto = this.financialService.calculateMonthlyFunding(vehicleValue, duration, financialTypeName);
-		HttpSession session = request.getSession();
-		session.setAttribute("financialDto", financialDto);
-		request.setAttribute("financialDto",financialDto);
-		request.getRequestDispatcher("/financial.jsp").forward(request, response);		
+		try {
+			String financialTypeName = request.getParameter("financialType");
+			float vehicleValue = Float.parseFloat(request.getParameter("vehicleValue"));
+			int duration = Integer.parseInt(request.getParameter("financialDuration"));
+			FinancialDto financialDto = this.financialService.calculateMonthlyFunding(vehicleValue, duration, financialTypeName);
+			HttpSession session = request.getSession();
+			session.setAttribute("financialDto", financialDto);
+			request.setAttribute("financialDto",financialDto);
+			request.getRequestDispatcher("/financial.jsp").forward(request, response);		
+		}catch (NumberFormatException ex) {
+			ex.printStackTrace();
+			PrintWriter writer = response.getWriter();
+			writer.println("<h1>Erro ao inserir valores do veículo ou duração, por favor volte a tentar</h1>");
+			writer.println("<a href=\"index.jsp\">Página Inicial</a>");
+			writer.close();
+		}
+		
 	}
 
 	/**
@@ -56,7 +65,8 @@ public class FinancialServlet extends HttpServlet {
 		FinancialDto financialDto = (FinancialDto) session.getAttribute("financialDto");
 		this.financialService.createFinancial(financialDto, clientName, clientContact);
 		PrintWriter writer = response.getWriter();
-		writer.println("<h1>Financial information saved</h1>");
+		writer.println("<h1>Financiamento Guardado</h1>");
+		writer.println("<a href=\"index.jsp\">Página Inicial</a>");
 		writer.close();
 	}
 
