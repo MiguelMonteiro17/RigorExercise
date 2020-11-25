@@ -1,0 +1,1 @@
+To run this program please put the file "financialType.json" on this path "C:\rigor\".
