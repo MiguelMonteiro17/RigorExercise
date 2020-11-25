@@ -1,4 +1,4 @@
-package com.rigor.servlets.dto;
+package com.rigor.dto;
 
 public class FinancialTypeDto {
 

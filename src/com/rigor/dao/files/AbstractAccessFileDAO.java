@@ -1,4 +1,4 @@
-package com.rigor.servlets.dao.files;
+package com.rigor.dao.files;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

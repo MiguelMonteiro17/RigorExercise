@@ -1,4 +1,4 @@
-package com.rigor.servlets.dao.files;
+package com.rigor.dao.files;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,9 +8,9 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.rigor.servlets.dao.FinancialTypeDAO;
-import com.rigor.servlets.model.Financial;
-import com.rigor.servlets.model.FinancialType;
+import com.rigor.dao.FinancialTypeDAO;
+import com.rigor.model.Financial;
+import com.rigor.model.FinancialType;
 
 public class FinancialTypeDAOImpl implements FinancialTypeDAO{
 	

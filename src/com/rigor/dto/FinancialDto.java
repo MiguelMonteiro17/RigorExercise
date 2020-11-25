@@ -1,16 +1,16 @@
-package com.rigor.servlets.dto;
+package com.rigor.dto;
 
 public class FinancialDto {
 
-	public float vehicleValue;
+	private float vehicleValue;
 	
-	public String monthlyFunding;
+	private String monthlyFunding;
 	
-	public int financialDuration;
+	private int financialDuration;
 	
-	public int monthlyDuration;
+	private int monthlyDuration;
 	
-	public FinancialTypeDto financialTypeDto;
+	private FinancialTypeDto financialTypeDto;
 
 	public float getVehicleValue() {
 		return vehicleValue;

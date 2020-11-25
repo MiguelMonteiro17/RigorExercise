@@ -1,6 +1,6 @@
-package com.rigor.servlets.dao;
+package com.rigor.dao;
 
-import com.rigor.servlets.model.Financial;
+import com.rigor.model.Financial;
 
 public interface FinancialDAO {
 	

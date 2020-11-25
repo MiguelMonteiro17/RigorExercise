@@ -1,14 +1,16 @@
-package com.rigor.servlets.service;
+package com.rigor.service;
 
-import com.rigor.servlets.dao.FinancialDAO;
-import com.rigor.servlets.dao.FinancialTypeDAO;
-import com.rigor.servlets.dao.files.FinancialDAOImpl;
-import com.rigor.servlets.dao.files.FinancialTypeDAOImpl;
-import com.rigor.servlets.dto.FinancialDto;
-import com.rigor.servlets.dto.FinancialTypeDto;
-import com.rigor.servlets.model.Client;
-import com.rigor.servlets.model.Financial;
-import com.rigor.servlets.model.FinancialType;
+import com.rigor.dao.FinancialDAO;
+import com.rigor.dao.FinancialTypeDAO;
+import com.rigor.dao.files.FinancialDAOImpl;
+import com.rigor.dao.files.FinancialTypeDAOImpl;
+import com.rigor.dto.FinancialDto;
+import com.rigor.dto.FinancialTypeDto;
+import com.rigor.exeption.FinancialDurationException;
+import com.rigor.exeption.VehicleValueException;
+import com.rigor.model.Client;
+import com.rigor.model.Financial;
+import com.rigor.model.FinancialType;
 
 public class FinancialServiceImpl implements FinancialService{
 	
@@ -22,7 +24,7 @@ public class FinancialServiceImpl implements FinancialService{
 	}
 
 	@Override
-	public FinancialDto calculateMonthlyFunding(float vehicleValue, int duration, String financialTypeName) {
+	public FinancialDto calculateMonthlyFunding(float vehicleValue, int duration, String financialTypeName) throws VehicleValueException,FinancialDurationException {
 		FinancialType financialType = this.financialTypeDAO.getFinancialTypeByName(financialTypeName);
 		if(financialType != null) {
 			Financial financial = new Financial(vehicleValue, duration, financialType);
@@ -31,18 +33,19 @@ public class FinancialServiceImpl implements FinancialService{
 			
 			FinancialTypeDto financialTypeDto = this.createFinancialTypeDto(financialType);
 			FinancialDto financialDto = new FinancialDto();
-			financialDto.monthlyFunding = String.format("%.2f", monthlyFunding);
-			financialDto.vehicleValue = vehicleValue;
-			financialDto.monthlyDuration = financial.getMonthlyFundingDuration();
+			financialDto.setMonthlyFunding(String.format("%.2f", monthlyFunding));
+			financialDto.setVehicleValue(vehicleValue);
+			financialDto.setMonthlyDuration(financial.getMonthlyFundingDuration());
+			financialDto.setFinancialDuration(financial.getFinancialDuration());
 			financialDto.setFinancialTypeDto(financialTypeDto);
+			
 			return financialDto;
 		}
 		return null;
 	}
 	
-	//TODO: return the respective DTO, maybe implement converts to convert DTO to model class
 	@Override
-	public void createFinancial(FinancialDto financialDto, String name, String contact) {
+	public void createFinancial(FinancialDto financialDto, String name, String contact) throws VehicleValueException,FinancialDurationException {
 		Client client = new Client(name,contact);
 		FinancialType financialType = this.financialTypeDAO.getFinancialTypeByName(financialDto.getFinancialTypeDto().getFinancialTypeName());
 		Financial financial = new Financial(financialDto.getVehicleValue(),financialDto.getFinancialDuration(),financialType,client);

@@ -1,4 +1,4 @@
-package com.rigor.servlets.model;
+package com.rigor.model;
 
 public class FinancialType {
 	

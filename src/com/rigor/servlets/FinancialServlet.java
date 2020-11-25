@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.rigor.servlets.dto.FinancialDto;
-import com.rigor.servlets.service.FinancialService;
-import com.rigor.servlets.service.FinancialServiceImpl;
+import com.rigor.dto.FinancialDto;
+import com.rigor.exeption.FinancialDurationException;
+import com.rigor.exeption.VehicleValueException;
+import com.rigor.service.FinancialService;
+import com.rigor.service.FinancialServiceImpl;
 
 /**
  * Servlet implementation class FinancialServlet
@@ -45,7 +47,13 @@ public class FinancialServlet extends HttpServlet {
 			session.setAttribute("financialDto", financialDto);
 			request.setAttribute("financialDto",financialDto);
 			request.getRequestDispatcher("/financial.jsp").forward(request, response);		
-		}catch (NumberFormatException ex) {
+		} catch(VehicleValueException | FinancialDurationException ex) {
+			ex.printStackTrace();
+			PrintWriter writer = response.getWriter();
+			writer.println("<h1>"+ex.getMessage()+"</h1>");
+			writer.println("<a href=\"index.jsp\">Página Inicial</a>");
+			writer.close();
+		} catch (NumberFormatException ex) {
 			ex.printStackTrace();
 			PrintWriter writer = response.getWriter();
 			writer.println("<h1>Erro ao inserir valores do veículo ou duração, por favor volte a tentar</h1>");
@@ -59,15 +67,23 @@ public class FinancialServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String clientName = request.getParameter("clientName");
-		String clientContact = request.getParameter("clientContact");
-		HttpSession session = request.getSession();
-		FinancialDto financialDto = (FinancialDto) session.getAttribute("financialDto");
-		this.financialService.createFinancial(financialDto, clientName, clientContact);
-		PrintWriter writer = response.getWriter();
-		writer.println("<h1>Financiamento Guardado</h1>");
-		writer.println("<a href=\"index.jsp\">Página Inicial</a>");
-		writer.close();
+		try {
+			String clientName = request.getParameter("clientName");
+			String clientContact = request.getParameter("clientContact");
+			HttpSession session = request.getSession();
+			FinancialDto financialDto = (FinancialDto) session.getAttribute("financialDto");
+			this.financialService.createFinancial(financialDto, clientName, clientContact);
+			PrintWriter writer = response.getWriter();
+			writer.println("<h1>Financiamento Guardado</h1>");
+			writer.println("<a href=\"index.jsp\">Página Inicial</a>");
+			writer.close();
+		}catch(VehicleValueException | FinancialDurationException ex) {
+			ex.printStackTrace();
+			PrintWriter writer = response.getWriter();
+			writer.println("<h1>"+ex.getMessage()+"</h1>");
+			writer.println("<a href=\"index.jsp\">Página Inicial</a>");
+			writer.close();
+		}
 	}
 
 }

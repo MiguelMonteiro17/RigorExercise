@@ -1,8 +1,8 @@
-package com.rigor.servlets.dao;
+package com.rigor.dao;
 
 import java.util.List;
 
-import com.rigor.servlets.model.FinancialType;
+import com.rigor.model.FinancialType;
 
 public interface FinancialTypeDAO {
 	

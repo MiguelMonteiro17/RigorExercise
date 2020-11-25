@@ -1,4 +1,7 @@
-package com.rigor.servlets.model;
+package com.rigor.model;
+
+import com.rigor.exeption.FinancialDurationException;
+import com.rigor.exeption.VehicleValueException;
 
 public class Financial {
 
@@ -10,11 +13,11 @@ public class Financial {
 	
 	private Client client;
 	
-	public Financial(float vehicleValue, int financialDuration, FinancialType financialType) {
+	public Financial(float vehicleValue, int financialDuration, FinancialType financialType) throws VehicleValueException, FinancialDurationException {
 		this(vehicleValue,financialDuration,financialType,null);
 	}
 	
-	public Financial(float vehicleValue, int financialDuration,FinancialType financialType, Client client) {
+	public Financial(float vehicleValue, int financialDuration,FinancialType financialType, Client client) throws VehicleValueException, FinancialDurationException {
 		setVehicleValue(vehicleValue);
 		setFinancialType(financialType);
 		setFinancialDuration(financialDuration);
@@ -29,19 +32,24 @@ public class Financial {
 		return vehicleValue;
 	}
 
-	public void setVehicleValue(float vehicleValue) {
-		this.vehicleValue = vehicleValue;
+	public void setVehicleValue(float vehicleValue) throws VehicleValueException {
+		if(vehicleValue>0) {
+			this.vehicleValue = vehicleValue;
+		}else {
+			throw new VehicleValueException();
+		}
+		
 	}
 
 	public int getFinancialDuration() {
 		return financialDuration;
 	}
 
-	public void setFinancialDuration(int financialDuration) {
-		if(checkFinancialDuration(financialDuration)) {
+	public void setFinancialDuration(int financialDuration) throws FinancialDurationException {
+		if(financialDuration>0 && checkFinancialDuration(financialDuration)) {
 			this.financialDuration = financialDuration;
 		}else {
-			//TODO: throw exception because the financialDuration can't be bigger than the maxDuration supported on the financialType
+			throw new FinancialDurationException(this.financialType.getFinancialTypeName(), this.financialType.getMaxDuration());
 		}
 		
 	}
