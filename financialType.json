@@ -1,0 +1,12 @@
+[
+    {
+        "financialTypeName": "Interno",
+        "maxDuration": 4,
+        "factor": 6.5
+    },
+    {
+        "financialTypeName": "Externo",
+        "maxDuration": 5,
+        "factor": 6.5
+    }
+]

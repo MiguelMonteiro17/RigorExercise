@@ -8,7 +8,7 @@ import com.rigor.model.FinancialType;
 
 public class FinancialTypeDAOImpl extends AbstractAccessFileDAO implements FinancialTypeDAO{
 	
-	private static final String financialTypeFile = "C:\\projects\\financialType.json";
+	private static final String financialTypeFile = "C:\\rigor\\financialType.json";
 	
 	public FinancialTypeDAOImpl() {
 		super();
