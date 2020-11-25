@@ -35,7 +35,8 @@ public abstract class AbstractAccessFileDAO {
 	
 	protected <T> void saveListTypeOnJsonFile(String fileName,List<T> listFinancial) {	
 		try{
-			FileWriter writer; writer = new FileWriter(fileName);
+			FileWriter writer;
+			writer = new FileWriter(fileName);
 			gson.toJson(listFinancial,writer);
 			writer.close();
 		} catch (IOException e) {

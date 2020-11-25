@@ -25,5 +25,6 @@ public class FinancialDAOImpl extends AbstractAccessFileDAO implements Financial
 			}
 		}
 		listFinancial.add(financial);
+		super.saveListTypeOnJsonFile(financialFile, listFinancial);
 	}
 }
