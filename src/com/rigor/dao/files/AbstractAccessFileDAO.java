@@ -4,8 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -15,10 +13,13 @@ import com.google.gson.JsonSyntaxException;
 public abstract class AbstractAccessFileDAO {
 	private Gson gson;
 	
-	protected <T,A> List<A> getListTypeFromFile(String fileName, Class<T> classType){	
+	public AbstractAccessFileDAO() {
+		gson = new Gson();
+	}
+	
+	protected <T> T getListTypeFromFile(String fileName, Class<T> classType){	
 		try {
-			T arrayFinancial = gson.fromJson(new FileReader(fileName), classType);
-			return  (List<A>) Arrays.asList(arrayFinancial);
+			return gson.fromJson(new FileReader(fileName), classType);
 		} catch (JsonSyntaxException e) {
 			//TODO: log error
 			e.printStackTrace();
@@ -29,7 +30,7 @@ public abstract class AbstractAccessFileDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ArrayList<>();
+		return null;
 	}
 	
 	protected <T> void saveListTypeOnJsonFile(String fileName,List<T> listFinancial) {	
